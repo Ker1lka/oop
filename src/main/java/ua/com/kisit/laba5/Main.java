@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        //Створюємо 3 читачів
         Readers reader = new Readers();
         reader.setId(1L);
         reader.setFirstName("Stepan");
@@ -23,7 +24,7 @@ public class Main {
         reader3.setEmail("third@example.com");
         reader3.setPhone("09790832");
 
-
+        //Створюємо 3 аккаунти читачів
         Users user = new Users();
         user.setId(1L);
         user.setLogin("stepa");
@@ -36,7 +37,7 @@ public class Main {
         user3.setId(3L);
         user3.setLogin("nazar");
         user3.setPassword("3333");
-
+        //Створюємо ролі для аккаунтів
         Roles role1 = new Roles();
         role1.setId(1L);
         role1.setName("admin");
@@ -48,14 +49,15 @@ public class Main {
         Set<Roles> rolesList = new HashSet<>();
         rolesList.add(role1);
         rolesList.add(role2);
-
-        user.setRoles(rolesList);
-        user2.setRoles(rolesList);
-        user3.setRoles(rolesList);
+        //Надаємо читачам аккаунти, а потім аккаунтам ролі
         reader.setUser(user);
         reader2.setUser(user2);
         reader3.setUser(user3);
+        user.setRoles(rolesList);
+        user2.setRoles(rolesList);
+        user3.setRoles(rolesList);
 
+        //Створюємо 2 категорії
         Categories category = new Categories();
         category.setId(1L);
         category.setName("Americans Books");
@@ -68,6 +70,7 @@ public class Main {
         category2.setDescription("Spanish, German, French, Italian languages");
         category2.setImage("/pictures/Euro_flag.jpg");
 
+        //Створюємо 3 книги
         Books book = new Books();
         book.setId(1L);
         book.setCategory(category);
@@ -92,6 +95,7 @@ public class Main {
         book3.setDescription("Dirty duck dreams of traveling");
         book3.setImage("/pictures/duck.jpg");
 
+        //Створюємо адресу Бібліотеки та читачів(для надання книги додому)
         Address address = new Address();
         address.setId(1L);
         address.setCity("Lviv");
@@ -120,6 +124,7 @@ public class Main {
         address4.setStreet("Frichs");
         address4.setZip("98982");
 
+        //Створюємо варіанти: або в бібліотеці, або книга надається додому
         Issuances issuance = new Issuances();
         issuance.setId(1L);
         issuance.setName("In Library");
@@ -140,18 +145,19 @@ public class Main {
         issuance4.setName("To Home");
         issuance4.setAddress(address4);
 
+        //Створюємо заказ для читання в бібліотеці
         Orders order = new Orders();
         order.setId(1L);
         order.setReader(reader);
         order.setDate(new Date());
         order.setIssuance(issuance);
-
+        //Створюємо заказ для надання додому
         Orders order2 = new Orders();
         order2.setId(2L);
         order2.setReader(reader2);
         order2.setDate(new Date());
         order2.setIssuance(issuance2);
-
+        //Створюємо заказ, що книги взяли та скільки
         BooksHasOrders booksHasOrders = new BooksHasOrders();
         booksHasOrders.setId(1L);
         booksHasOrders.setBook(book);
@@ -163,29 +169,30 @@ public class Main {
         booksHasOrders2.setBook(book3);
         booksHasOrders2.setIssuance(issuance4);
         booksHasOrders2.setQuantity(2);
-
+        //Створюємо список читачів та виводимо в консоль(всі читачі)
         List<Readers> readersList = new ArrayList<>();
         readersList.add(reader);
         readersList.add(reader2);
         readersList.add(reader3);
         System.out.println(readersList);
-
+        //Створюємо список книг та виводимо в консоль(всі книги)
         List<Books> booksList = new ArrayList<>();
         booksList.add(book);
         booksList.add(book2);
         booksList.add(book3);
         System.out.println(booksList);
-
+        //Створюємо список заказів(в бібліотеці або додому) та виводмо в консоль
         List<Orders> ordersList = new ArrayList<>();
         ordersList.add(order);
         ordersList.add(order2);
         System.out.println(ordersList);
-
-
+        //Створюємо список зайнятих книг та виводимо в консоль
         List<BooksHasOrders> booksHasOrdersList = new ArrayList<>();
         booksHasOrdersList.add(booksHasOrders);
         booksHasOrdersList.add(booksHasOrders2);
         System.out.println(booksHasOrdersList);
-
+        //Шукаємо відповідні книги за назвою або автором
+        booksList.stream().filter(e->e.getTitle().equals("Duck")).forEach(ee-> System.out.println("Search("+ee+")"));
+        booksList.stream().filter(e->e.getAuthor().equals("Kolin Makkalou")).forEach(ee-> System.out.println("Search("+ee+")"));
     }
 }
